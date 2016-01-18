@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html lang="en">
+<head>
+<style>
+.right{
+    width: 25%;
+    float: right;
+    margin-top: -980px;
+  
+}
+.dropdown{
+  margin:center;
+    width: 90%;
+
+}
+p{
+  width:700px;
+}
+.down{
+  margin-top:20px;
+}
+.graph{
+  margin-top:-100px;
+  margin-left:100px;
+}
+.my-legend .legend-title {
+    text-align: left;
+    margin-left:40px; 
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 90%;
+    }
+  .my-legend .legend-scale ul {
+    margin: 0;
+    padding: 0;
+    float: left;
+    list-style: none;
+    }
+  .my-legend .legend-scale ul li {
+    display: block;
+    float: left;
+    width: 50px;
+    margin-bottom: 6px;
+    text-align: center;
+    font-size: 80%;
+    list-style: none;
+    }
+  .my-legend ul.legend-labels li span {
+    display: block;
+    float: left;
+    height: 15px;
+    width: 50px;
+    }
+  .my-legend .legend-source {
+    font-size: 70%;
+    color: #999;
+    clear: both;
+    }
+  .my-legend a {
+    color: #777;
+    }
+.up{
+  margin-top : -40px;
+  margin-right:50px;
+}
+.center{
+    margin: auto;
+    width: 60%;
+    padding: 10px;
+}
+.mytooltip {
+  position:absolute;
+  text-align: center;
+  width: 200px;
+  height:auto;
+  background-color: #EDE3D1;
+  border-radius: 10px;
+  color: #787777;
+  padding: 6px 12px;
+  z-index:3;
+}
+ 
+.mytooltip:after {
+  box-sizing: border-box;
+  display: inline;
+  width: 100%;
+  line-height: 1;
+  color: #EDE3D1;
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+  margin: -3px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+ 
+.mytooltip span {
+    display: block;
+    text-align: center;
+    width: 200px;
+    height: auto;
+    margin: 5px auto;
+  }
+ 
+#thumbnail {
+    width: 200px;
+    height: auto;
+    margin: 0 auto;
+    color: #787777;
+    text-align: center;
+  }
+}</style>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <meta name="description" content="D3">
+  <meta name="author" content="Tomomi Imura  @girlie_mac">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js"></script>  
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
+      <link href="http://fonts.googleapis.com/css?family=Lobster+Two:400,700italic" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript" src="jquery.tipsy.js"></script>
+    <link href="tipsy.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body >
+<div class = "center">
+    <h1>How do the different stock industries look today?</h1>
+    <!-- stREMAING DATA FROM HOW MANY LONG AGO TIME UP UNTIL NOW -->
+    <h2>D3 Bubble Chart with Stock information from Yahoo Finance!</h2>
+    <p> This is a data visualization of the 1-day price change of stock prices acorss different 
+    industires. To use, simply click the industry you would like to examine from the drop-down to 
+    the right, and see the legend to see the various levels of color. Made by Yada p.</p>
+  </header>
+ 
+
+    <section id="chart"></section> 
+
+  </div>
+  <div class ="graph">
+      <section id = "graph"  class= "up"> 
+      </section>
+
+  <section class="right">
+  <div class = "dropdown">
+ <legend >
+
+       Which industry would you like to examine?<br>
+      <select id="dataCenterPicker" class="center" onchange="test(this);">
+      <option value = "0">Industrial Goods</option>
+        <option value="1">Fabrication</option> 
+        <option value="2">Consumer Goods</option>
+        <option value="3">Healthcare</option> 
+        <option value="4">Services</option>
+        <option value="5">Technology</option>
+        <option value="6">Utilities</option>
+      </select>
+      </legend>
+      </div>
+  <div class='my-legend'>
+   
+
+<div class='legend-title down '>Color Legend</div>
+<div class='legend-scale center'>
+  <ul class='legend-labels right'>
+    <li><span style='background:#ffe5e5;'></span>Less than 0.1%</li>
+    <li><span style='background:#ffcccc;'></span>Less than 0.3%</li>
+    <li><span style='background:#ffb2b2;'></span>Less than 0.5%</li>
+    <li><span style='background:#ff9999;'></span>Less than 0.8%</li>
+    <li><span style='background:#ff7f7f;'></span>Less than 1.0</li>
+     <li><span style='background:#ff6666;'></span>Less than 1.3%</li>
+      <li><span style='background:#ff4c4c;'></span>Less than 1.7%</li>
+       <li><span style='background:#ff3232;'></span>Less than 2%</li>
+        <li><span style='background:#ff1919;'></span>More than 2%%</li>
+
+  </ul>
+  <ul class='legend-labels  right'>
+              <li><span style='background:#d2ffa6;'></span>Less than 0.1%</li>
+          <li><span style='background:#bbff9f;'></span>Less than 0.3%</li>
+      <li><span style='background:#aeff8c;'></span>Less than 0.5%</li>
+    <li><span style='background:#bbff7a;'></span>Less than 0.8%/li>
+    <li><span style='background:#a5ff60;'></span>Less than 1.0</li>
+    <li><span style='background:#9aee49;'></span>Less than 1.3%</li>
+
+    <li><span style='background:#85cd3f;'></span>Less than 1.7%</li>
+                    <li><span style='background:#5a8b63;'></span>1Less than 2%</li>
+
+                <li><span style='background:#5a6b2a;'></span> More than 2%</li>
+
+
+  </ul>
+</div>
+</div>
+</section>
+<div class = "center">
+
+
+</legend>
+
+</section>
+</div>
+</body>
+
+<script> 
+
+
+(function() {
+
+window.onload = function(){
+  console.log("On laoding"); 
+    localStorage.setItem("value", 0);  //setting the items at first to 0 
+    //now, I need to first get the json 
+    $.post(
+   'http://127.0.0.1:8000/getBackEnd').done(function(data){
+        console.log(typeof(data)); 
+        console.log(data); 
+        data = JSON.stringify(data);  
+     
+        localStorage.setItem("json", data);
+    
+        render(); 
+        //I wnat to pas sin the data gotten, and then have the other page have access to that dat a to display it using 
+        //d3.js 
+    
+
+      }).fail(function (xhr, textStatus, errorThrown) {
+        alert(xhr.responseText);
+    });
+
+
+}
+
+
+
+    var diameter = 1000;
+    var neg_color = ["#ffe5e5", "#ffcccc", "#ffb2b2", "#ff9999", "#ff7f7f", "#ff6666", "#ff4c4c", "#ff3232", "#ff1919"]; 
+    var pos_color = ["#5a6b2a", "#85cd3f", "#9aee49", "#a5ff60", "#bbff7a","#aeff8c", "#5a8b63", "#bbff9f", "#d2ffa6"]
+
+window.test = function(e){
+    console.log("IN TEST NOW");
+    console.log(e.value); 
+    //you want to reload the screen, and then process the data. 
+   localStorage.setItem("value", e.value);  
+
+   processData(localStorage.getItem("json"), localStorage.getItem("value"));
+  window.location.href = ""  
+
+
+  
+}
+
+//this creates the force that willc reate the collapsible noes. 
+
+var force = d3.layout.force()
+    .linkDistance(80)
+    .charge(-120)
+    .gravity(.05)
+    .size([diameter, diameter])
+
+
+    var svg = d3.select('#graph').append('svg')
+                    .attr('width', diameter)
+                    .attr('height', diameter)
+                    .attr("class", "bubble")
+                   //create a bubble class. 
+
+
+    var bubble = d3.layout.pack()
+                .size([diameter, diameter])
+                .value(function(d) {return Math.abs(d.size);})
+         // .sort(function(a, b) {
+                //  return -(a.value - b.value)
+                // }) 
+                .padding(3);
+  
+  // generate data with calculated layout values
+
+var value = localStorage.getItem("value"); 
+console.log("The value is "+ value.toString()); 
+
+ //so this is getting called beofr ethe back-end is 
+
+
+
+
+function render(){
+ 
+var myTool = d3.select("body")
+                  .append("div")
+                  .attr("class", "mytooltip")
+                  .style("opacity", "0")
+                  .style("display", "none");
+
+      var json =  localStorage.getItem("json");
+console.log("and json is "+ json);  
+
+//so we just need to load the json from teh objec tnow. 
+
+  var nodes = bubble.nodes(processData(json, value))
+                        .filter(function(d) { return !d.children; }); // filter out the outer bubble
+
+
+
+
+     var bubbles = svg.append("g")
+        .attr("transform", "translate(0,0)")
+        .selectAll(".bubble")
+        .data(nodes)
+        .enter(); 
+
+        bubbles.append("circle")
+    .style("fill", "black")
+    .attr("r", 10)
+    .attr("cx", 50)
+   .attr("cy", function(d){ return d.y; })
+   .on("mouseover", function(d){
+    console.log("MOUSING OVER"); 
+      d3.select(this).transition().duration(300)
+        .attr("r", function(d){
+          return d.r+10;  })
+      
+
+    })
+    .on("mouseout", function(){
+      d3.select(this).transition().duration(300)
+        .attr("r", function(d){
+          return d.r; })
+      })
+   
+  .transition()
+    .delay(100)
+    .duration(1000)    
+    .attr("r", function(d){ return d.r; })
+  .attr("cx", function(d){ return d.x; })
+            .style("fill", function(d) { 
+              return d.color; });
+    
+
+bubbles.append("svg:title")
+  .text(function(d) { return d.className + ": " + d.size; });
+
+
+//now, you want to format the bubbles/text in th bubbes. 
+  bubbles.append("text") 
+    .attr("x", function(d){ return d.x; })
+        .attr("y", function(d){ return d.y + 5; })
+        .attr("text-anchor", "middle")
+        .text(function(d){ return d.className; })
+        .style({
+            "fill":"white", 
+            "font-family":"Helvetica Neue, Helvetica, Arial, san-serif",
+            "font-size": "12px"
+        });
+
+     bubbles.append("text") 
+    .attr("x", function(d){ return d.x; })
+        .attr("y", function(d){ return d.y + 30; })
+        .attr("text-anchor", "middle")
+        .text(function(d){ return d.size ; })
+        .style({
+            "fill":"white", 
+            "font-family":"Helvetica Neue, Helvetica, Arial, san-serif",
+            "font-size": "12px", 
+            "visible":"invisible"
+        });
+
+  $('circle').tipsy({ 
+        gravity: 'w', 
+        html: true, 
+        title: function() {
+          var d = this.__data__, c = colors(d.i);
+          return 'Hi there! My color is <span style="color:' + c + '">' + c + '</span>'; 
+        }
+      });
+
+
+}
+  
+  function processData(data, value) {
+    console.log("THE DAT BEING PROCESSED"+ typeof(data))  
+    data = JSON.parse(data)
+    console.log(data)
+    var obj = data.children[value];
+    console.log(obj)
+
+    var newDataSet = [];
+
+    for(var prop in obj.children) {
+
+      //comput the oclor.  
+      var size = Math.abs(obj.children[prop]);
+      if (Math.sign(obj.children[prop]) == -1){
+        var color = neg_color; 
+      } 
+      else{
+        var color = pos_color; 
+      }
+      if(size< 0.1){
+        pickedColor =  color[0]; 
+      }else if (size < 0.3){
+        pickedColor = color[1]; 
+      }else if (size <0.5){
+        pickedColor = color[2]
+      }else if (size  <0.5){
+        pickedColor = color[3]
+      }else if(size < 0.8){
+        pickedColor = color[4]
+      }else if(size < 1){
+        pickedColor  = color[5]
+      }else if (size < 1.4){
+        pickedColor = color[6]
+      }else if (size < 2.0){
+        pickedColor = color[7];
+      }else{
+        pickedColor = color[8]
+      }
+    
+
+
+
+      newDataSet.push({name: prop, className: prop.toLowerCase(), color: pickedColor, size: obj.children[prop]});
+
+      
+    }
+    return {children: newDataSet};
+  }
+  
+})();
+
+</script>
+
+</html>

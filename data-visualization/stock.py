@@ -50,6 +50,8 @@ def getDataToFrontEnd():
 								part = part.replace("&", "")
 								part = part.replace("<", "")
 								part = part.replace("size=-1>", "")
+								part = part.replace("size=1>", "")
+
 								jsonStr+=" \""+part +"\" : "
 
 							if "</font></td><td" in part:

@@ -25,7 +25,7 @@ funcsigs==0.4
 google-api-python-client==1.4.2
 gunicorn==19.4.5
 hpack==2.0.1
-httpie==0.9.2
+httpie==1.0.3
 httplib2==0.9.2
 idna==2.0
 IndicoIo==0.10.3

@@ -103,7 +103,7 @@ pywapi==0.3.8
 PyYAML==3.11
 requests==2.8.1
 requests-oauthlib==0.5.0
-rsa==3.2.3
+rsa==4.1
 scikit-learn==0.17
 simplejson==3.8.1
 singledispatch==3.4.0.3

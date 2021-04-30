@@ -110,7 +110,7 @@ singledispatch==3.4.0.3
 six==1.10.0
 textblob==0.11.0
 tornado==4.3
-Twisted==13.2.0
+Twisted==20.3.0
 TwitterSearch==1.0.1
 ujson==1.34
 uritemplate==0.6

@@ -32,7 +32,7 @@ IndicoIo==0.10.3
 ipaddress==1.0.15
 itsdangerous==0.24
 Jinja2==2.8
-joblib==0.9.3
+joblib==1.2.0
 lxml==3.4.4
 macholib==1.5.1
 Markdown==2.6.4
